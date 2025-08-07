@@ -4,6 +4,7 @@ import { userRegister } from '../../lib/api/UserApi';
 import { alertError, alertSuccess } from '../../lib/alert';
 import { useRouter } from 'vue-router';
 
+const token = useLocalStorage('token', null);
 const router = useRouter();
 const user = reactive({
     username: '',
@@ -39,6 +40,12 @@ async function handleSubmit(){
     }
    
 }
+onbedoreMount(() => {
+    if (token.value) {
+        router.push({ path: '/dashboard/contacts' }); // Redirect to dashboard if already logged in
+    }
+    // Any setup logic before the component is mounted
+});
 </script>
 <template>
     <div class="animate-fade-in bg-gray-800 bg-opacity-80 p-8 rounded-xl shadow-custom border border-gray-700 backdrop-blur-sm w-full max-w-md">

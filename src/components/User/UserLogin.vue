@@ -2,7 +2,7 @@
 import { RouterLink } from 'vue-router';
 import { userLogin } from '../../lib/api/UserApi';
 import { alertError, alertSuccess } from '../../lib/alert';
-import { reactive } from 'vue';
+import { onBeforeMount, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocalStorage } from '@vueuse/core';
 
@@ -33,6 +33,11 @@ async function handleSubmit() {
         await alertError('Login failed. Please try again.');
     }
 }
+onBeforeMount(() => {
+    if (token.value) {
+        router.push({ path: '/dashboard/contacts' }); // Redirect to dashboard if already logged in
+    }
+});
 </script>
 <template>
 <div class="animate-fade-in bg-gray-800 bg-opacity-80 p-8 rounded-xl shadow-custom border border-gray-700 backdrop-blur-sm w-full max-w-md">
